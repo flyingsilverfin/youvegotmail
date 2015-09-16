@@ -1,0 +1,89 @@
+
+Youve_Got_Mail.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000004a  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .comment      00000030  00000000  00000000  0000009e  2**0
+                  CONTENTS, READONLY
+  2 .debug_aranges 00000050  00000000  00000000  000000ce  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   000001bb  00000000  00000000  0000011e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 00000134  00000000  00000000  000002d9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   0000018f  00000000  00000000  0000040d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  00000068  00000000  00000000  0000059c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    0000016f  00000000  00000000  00000604  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_ranges 00000030  00000000  00000000  00000773  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	13 c0       	rjmp	.+38     	; 0x28 <__ctors_end>
+   2:	1a c0       	rjmp	.+52     	; 0x38 <__bad_interrupt>
+   4:	19 c0       	rjmp	.+50     	; 0x38 <__bad_interrupt>
+   6:	18 c0       	rjmp	.+48     	; 0x38 <__bad_interrupt>
+   8:	17 c0       	rjmp	.+46     	; 0x38 <__bad_interrupt>
+   a:	16 c0       	rjmp	.+44     	; 0x38 <__bad_interrupt>
+   c:	15 c0       	rjmp	.+42     	; 0x38 <__bad_interrupt>
+   e:	14 c0       	rjmp	.+40     	; 0x38 <__bad_interrupt>
+  10:	13 c0       	rjmp	.+38     	; 0x38 <__bad_interrupt>
+  12:	12 c0       	rjmp	.+36     	; 0x38 <__bad_interrupt>
+  14:	11 c0       	rjmp	.+34     	; 0x38 <__bad_interrupt>
+  16:	10 c0       	rjmp	.+32     	; 0x38 <__bad_interrupt>
+  18:	0f c0       	rjmp	.+30     	; 0x38 <__bad_interrupt>
+  1a:	0e c0       	rjmp	.+28     	; 0x38 <__bad_interrupt>
+  1c:	0d c0       	rjmp	.+26     	; 0x38 <__bad_interrupt>
+  1e:	0c c0       	rjmp	.+24     	; 0x38 <__bad_interrupt>
+  20:	0b c0       	rjmp	.+22     	; 0x38 <__bad_interrupt>
+  22:	0a c0       	rjmp	.+20     	; 0x38 <__bad_interrupt>
+  24:	09 c0       	rjmp	.+18     	; 0x38 <__bad_interrupt>
+  26:	08 c0       	rjmp	.+16     	; 0x38 <__bad_interrupt>
+
+00000028 <__ctors_end>:
+  28:	11 24       	eor	r1, r1
+  2a:	1f be       	out	0x3f, r1	; 63
+  2c:	cf ef       	ldi	r28, 0xFF	; 255
+  2e:	d1 e0       	ldi	r29, 0x01	; 1
+  30:	de bf       	out	0x3e, r29	; 62
+  32:	cd bf       	out	0x3d, r28	; 61
+  34:	03 d0       	rcall	.+6      	; 0x3c <main>
+  36:	07 c0       	rjmp	.+14     	; 0x46 <_exit>
+
+00000038 <__bad_interrupt>:
+  38:	e3 cf       	rjmp	.-58     	; 0x0 <__vectors>
+
+0000003a <Delay_Ms>:
+	DDRC = DDRC|(1<<DDC0); // PC0 is output
+	
+}
+
+void Delay_Ms(uint16_t ms)
+{
+  3a:	08 95       	ret
+
+0000003c <main>:
+
+int main(void)
+{
+    while(1)
+    {
+        PINC = PINC|(1<<PINC0); // Toggle PC0
+  3c:	30 9a       	sbi	0x06, 0	; 6
+		Delay_Ms(1000);
+  3e:	88 ee       	ldi	r24, 0xE8	; 232
+  40:	93 e0       	ldi	r25, 0x03	; 3
+  42:	fb df       	rcall	.-10     	; 0x3a <Delay_Ms>
+  44:	fb cf       	rjmp	.-10     	; 0x3c <main>
+
+00000046 <_exit>:
+  46:	f8 94       	cli
+
+00000048 <__stop_program>:
+  48:	ff cf       	rjmp	.-2      	; 0x48 <__stop_program>

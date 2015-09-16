@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Youve_Got_Mail", "Youve_Got_Mail\Youve_Got_Mail.cproj", "{3B436C3D-4ED9-4728-9B61-1D51B2952FEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B436C3D-4ED9-4728-9B61-1D51B2952FEE}.Debug|AVR.ActiveCfg = Debug|AVR
+		{3B436C3D-4ED9-4728-9B61-1D51B2952FEE}.Debug|AVR.Build.0 = Debug|AVR
+		{3B436C3D-4ED9-4728-9B61-1D51B2952FEE}.Release|AVR.ActiveCfg = Release|AVR
+		{3B436C3D-4ED9-4728-9B61-1D51B2952FEE}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
