@@ -1,7 +1,7 @@
 /*
  * User.c
  *
- * Created: 16/09/2015 18:30:18
+ * Created: 18/09/2015 12:36:15
  *  Author: David
  */ 
 
@@ -17,10 +17,10 @@ void Init(void)
 
 void Delay_Ms(uint16_t ms)
 {
-	uint16_t Delay_Cycles = (ms * (F_CPU/1000));
+	uint32_t Delay_Cycles;
 	
 	
-	for (Delay_Cycles = Delay_Cycles; Delay_Cycles == 0 ; Delay_Cycles--);
+	for (Delay_Cycles = (ms * (F_CPU/10000)) ; Delay_Cycles > 0 ; Delay_Cycles--);
 }
 
 void Set_Pin(uint8_t Port, uint8_t Pin)

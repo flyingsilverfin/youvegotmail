@@ -11,9 +11,13 @@
 
 int main(void)
 {
+
+	Init();
     while(1)
     {
-        PINC = PINC|(1<<PINC0); // Toggle PC0
+		
+        PINC = (1<<PINC0); // Toggle PC0
 		Delay_Ms(1000);
+		
     }
 }

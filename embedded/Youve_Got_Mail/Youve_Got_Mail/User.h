@@ -17,6 +17,10 @@
 
 #include <avr/io.h>
 
+// # Defines
+
+#define F_CPU 1000000
+
 // Function Prototypes
 
 void Init(void);

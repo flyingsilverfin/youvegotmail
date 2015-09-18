@@ -1,0 +1,1 @@
+-c usbasp -p atmega16 -B12 -U flash:w:”C:\Users\David\youvegotmail\embedded\Youve_Got_Mail\Youve_Got_Mail\Debug\Youve_Got_Mail.hex”:i
