@@ -1,0 +1,3 @@
+- 3V seems like the easiest voltage for the sensor units to work with
+	- can for instance get http://www.amazon.com/CR2032-Lithium-Button-3-volt-Batteries/dp/B000WQSX4W (US amazon) 5x for 3.64 dollars
+	- Capacity of these button cells: 190 - 225 mAh (https://en.wikipedia.org/wiki/CR2032_battery)
