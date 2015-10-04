@@ -3,25 +3,25 @@ Youve_Got_Mail.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000000b4  00000000  00000000  00000054  2**1
+  0 .text         000000b8  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .comment      00000030  00000000  00000000  00000108  2**0
+  1 .comment      00000030  00000000  00000000  0000010c  2**0
                   CONTENTS, READONLY
-  2 .debug_aranges 00000050  00000000  00000000  00000138  2**0
+  2 .debug_aranges 00000058  00000000  00000000  0000013c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  3 .debug_info   000001d2  00000000  00000000  00000188  2**0
+  3 .debug_info   000001ee  00000000  00000000  00000194  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_abbrev 0000015f  00000000  00000000  0000035a  2**0
+  4 .debug_abbrev 0000015d  00000000  00000000  00000382  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_line   0000019c  00000000  00000000  000004b9  2**0
+  5 .debug_line   000001bc  00000000  00000000  000004df  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_frame  00000068  00000000  00000000  00000658  2**2
+  6 .debug_frame  00000078  00000000  00000000  0000069c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_str    00000178  00000000  00000000  000006c0  2**0
+  7 .debug_str    00000196  00000000  00000000  00000714  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_loc    00000044  00000000  00000000  00000838  2**0
+  8 .debug_loc    00000044  00000000  00000000  000008aa  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_ranges 00000030  00000000  00000000  0000087c  2**0
+  9 .debug_ranges 00000038  00000000  00000000  000008ee  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -55,102 +55,112 @@ Disassembly of section .text:
   2e:	d1 e0       	ldi	r29, 0x01	; 1
   30:	de bf       	out	0x3e, r29	; 62
   32:	cd bf       	out	0x3d, r28	; 61
-  34:	36 d0       	rcall	.+108    	; 0xa2 <main>
-  36:	3c c0       	rjmp	.+120    	; 0xb0 <_exit>
+  34:	38 d0       	rcall	.+112    	; 0xa6 <main>
+  36:	3e c0       	rjmp	.+124    	; 0xb4 <_exit>
 
 00000038 <__bad_interrupt>:
   38:	e3 cf       	rjmp	.-58     	; 0x0 <__vectors>
 
-0000003a <Init>:
-#include <avr/io.h>
-
-void Init(void)
-{
-	// Define Output Pins
-	DDRC = DDRC|(1<<DDC0); // PC0 is output
-  3a:	38 9a       	sbi	0x07, 0	; 7
-  3c:	08 95       	ret
-
-0000003e <Delay_Ms>:
+0000003a <Delay_Ms>:
 void Delay_Ms(uint16_t ms)
 {
 	uint32_t Delay_Cycles;
 	
 	
-	for (Delay_Cycles = (ms * (F_CPU/10000)) ; Delay_Cycles > 0 ; Delay_Cycles--);
-  3e:	a0 e0       	ldi	r26, 0x00	; 0
-  40:	b0 e0       	ldi	r27, 0x00	; 0
-  42:	88 0f       	add	r24, r24
-  44:	99 1f       	adc	r25, r25
-  46:	aa 1f       	adc	r26, r26
-  48:	bb 1f       	adc	r27, r27
-  4a:	88 0f       	add	r24, r24
-  4c:	99 1f       	adc	r25, r25
-  4e:	aa 1f       	adc	r26, r26
-  50:	bb 1f       	adc	r27, r27
-  52:	ac 01       	movw	r20, r24
-  54:	bd 01       	movw	r22, r26
-  56:	44 0f       	add	r20, r20
-  58:	55 1f       	adc	r21, r21
-  5a:	66 1f       	adc	r22, r22
-  5c:	77 1f       	adc	r23, r23
-  5e:	44 0f       	add	r20, r20
-  60:	55 1f       	adc	r21, r21
-  62:	66 1f       	adc	r22, r22
-  64:	77 1f       	adc	r23, r23
-  66:	84 0f       	add	r24, r20
-  68:	95 1f       	adc	r25, r21
-  6a:	a6 1f       	adc	r26, r22
-  6c:	b7 1f       	adc	r27, r23
-  6e:	ac 01       	movw	r20, r24
-  70:	bd 01       	movw	r22, r26
-  72:	44 0f       	add	r20, r20
-  74:	55 1f       	adc	r21, r21
-  76:	66 1f       	adc	r22, r22
-  78:	77 1f       	adc	r23, r23
-  7a:	44 0f       	add	r20, r20
-  7c:	55 1f       	adc	r21, r21
-  7e:	66 1f       	adc	r22, r22
-  80:	77 1f       	adc	r23, r23
-  82:	84 0f       	add	r24, r20
-  84:	95 1f       	adc	r25, r21
-  86:	a6 1f       	adc	r26, r22
-  88:	b7 1f       	adc	r27, r23
-  8a:	00 97       	sbiw	r24, 0x00	; 0
-  8c:	a1 05       	cpc	r26, r1
-  8e:	b1 05       	cpc	r27, r1
-  90:	39 f0       	breq	.+14     	; 0xa0 <__SREG__+0x61>
-  92:	01 97       	sbiw	r24, 0x01	; 1
-  94:	a1 09       	sbc	r26, r1
-  96:	b1 09       	sbc	r27, r1
-  98:	00 97       	sbiw	r24, 0x00	; 0
-  9a:	a1 05       	cpc	r26, r1
-  9c:	b1 05       	cpc	r27, r1
-  9e:	c9 f7       	brne	.-14     	; 0x92 <__SREG__+0x53>
-  a0:	08 95       	ret
+	for (Delay_Cycles = (ms * (1000000/10000)) ; Delay_Cycles > 0 ; Delay_Cycles--);
+  3a:	a0 e0       	ldi	r26, 0x00	; 0
+  3c:	b0 e0       	ldi	r27, 0x00	; 0
+  3e:	88 0f       	add	r24, r24
+  40:	99 1f       	adc	r25, r25
+  42:	aa 1f       	adc	r26, r26
+  44:	bb 1f       	adc	r27, r27
+  46:	88 0f       	add	r24, r24
+  48:	99 1f       	adc	r25, r25
+  4a:	aa 1f       	adc	r26, r26
+  4c:	bb 1f       	adc	r27, r27
+  4e:	ac 01       	movw	r20, r24
+  50:	bd 01       	movw	r22, r26
+  52:	44 0f       	add	r20, r20
+  54:	55 1f       	adc	r21, r21
+  56:	66 1f       	adc	r22, r22
+  58:	77 1f       	adc	r23, r23
+  5a:	44 0f       	add	r20, r20
+  5c:	55 1f       	adc	r21, r21
+  5e:	66 1f       	adc	r22, r22
+  60:	77 1f       	adc	r23, r23
+  62:	84 0f       	add	r24, r20
+  64:	95 1f       	adc	r25, r21
+  66:	a6 1f       	adc	r26, r22
+  68:	b7 1f       	adc	r27, r23
+  6a:	ac 01       	movw	r20, r24
+  6c:	bd 01       	movw	r22, r26
+  6e:	44 0f       	add	r20, r20
+  70:	55 1f       	adc	r21, r21
+  72:	66 1f       	adc	r22, r22
+  74:	77 1f       	adc	r23, r23
+  76:	44 0f       	add	r20, r20
+  78:	55 1f       	adc	r21, r21
+  7a:	66 1f       	adc	r22, r22
+  7c:	77 1f       	adc	r23, r23
+  7e:	84 0f       	add	r24, r20
+  80:	95 1f       	adc	r25, r21
+  82:	a6 1f       	adc	r26, r22
+  84:	b7 1f       	adc	r27, r23
+  86:	00 97       	sbiw	r24, 0x00	; 0
+  88:	a1 05       	cpc	r26, r1
+  8a:	b1 05       	cpc	r27, r1
+  8c:	39 f0       	breq	.+14     	; 0x9c <__SREG__+0x5d>
+  8e:	01 97       	sbiw	r24, 0x01	; 1
+  90:	a1 09       	sbc	r26, r1
+  92:	b1 09       	sbc	r27, r1
+  94:	00 97       	sbiw	r24, 0x00	; 0
+  96:	a1 05       	cpc	r26, r1
+  98:	b1 05       	cpc	r27, r1
+  9a:	c9 f7       	brne	.-14     	; 0x8e <__SREG__+0x4f>
+  9c:	08 95       	ret
 
-000000a2 <main>:
+0000009e <Init>:
+}
+
+void Init(void)
+{
+	// Define Output Pins
+	DDRC = DDRC |(1<<DDC0); // PC0 is digital output
+  9e:	38 9a       	sbi	0x07, 0	; 7
+	
+	//Return_5();
+	
+	while(1)
+	{
+		PINC = (1<<PINC0); // Toggle PC0
+  a0:	81 e0       	ldi	r24, 0x01	; 1
+  a2:	86 b9       	out	0x06, r24	; 6
+  a4:	fe cf       	rjmp	.-4      	; 0xa2 <Init+0x4>
+
+000000a6 <main>:
 #include "User.h"
 
 int main(void)
 {
-
+//	Return_5();
 	Init();
-  a2:	cb df       	rcall	.-106    	; 0x3a <Init>
-    while(1)
+  a6:	fb df       	rcall	.-10     	; 0x9e <Init>
+	
+	while(1)
     {
-		
-        PINC = (1<<PINC0); // Toggle PC0
-  a4:	c1 e0       	ldi	r28, 0x01	; 1
-  a6:	c6 b9       	out	0x06, r28	; 6
-		Delay_Ms(1000);
-  a8:	88 ee       	ldi	r24, 0xE8	; 232
-  aa:	93 e0       	ldi	r25, 0x03	; 3
-  ac:	c8 df       	rcall	.-112    	; 0x3e <Delay_Ms>
-  ae:	fb cf       	rjmp	.-10     	; 0xa6 <main+0x4>
+		while(1)
+		{
+			PINC = (1<<PINC0); // Toggle PC0
+  a8:	c1 e0       	ldi	r28, 0x01	; 1
+  aa:	c6 b9       	out	0x06, r28	; 6
+			Delay_Ms(1000);
+  ac:	88 ee       	ldi	r24, 0xE8	; 232
+  ae:	93 e0       	ldi	r25, 0x03	; 3
+  b0:	c4 df       	rcall	.-120    	; 0x3a <Delay_Ms>
+  b2:	fb cf       	rjmp	.-10     	; 0xaa <main+0x4>
 
-000000b0 <_exit>:
-  b0:	f8 94       	cli
+000000b4 <_exit>:
+  b4:	f8 94       	cli
 
-000000b2 <__stop_program>:
-  b2:	ff cf       	rjmp	.-2      	; 0xb2 <__stop_program>
+000000b6 <__stop_program>:
+  b6:	ff cf       	rjmp	.-2      	; 0xb6 <__stop_program>

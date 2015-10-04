@@ -11,13 +11,28 @@
 
 int main(void)
 {
-
+//	Return_5();
 	Init();
-    while(1)
+	
+	
+	while(1)
     {
+		while(1)
+		{
+			PINC = (1<<PINC0); // Toggle PC0
+			Delay_Ms(1000);
+		}
+		Check_Infrared();
+		uint8_t Detector_Blocked = Check_Infrared();
 		
-        PINC = (1<<PINC0); // Toggle PC0
-		Delay_Ms(1000);
+		if (Detector_Blocked == 1)
+		{
+			PORTC = (1<<PORTC0);
+		}
+		else
+		{
+			PORTC = 0;
+		}
 		
     }
 }

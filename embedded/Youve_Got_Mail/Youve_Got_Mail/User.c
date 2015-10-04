@@ -5,25 +5,70 @@
  *  Author: David
  */ 
 
-#include "User.h"
-#include <avr/io.h>
 
-void Init(void)
-{
-	// Define Output Pins
-	DDRC = DDRC|(1<<DDC0); // PC0 is output
-	
-}
+#include <avr/io.h>
+#include <delay.h>
+#include "User.h"
 
 void Delay_Ms(uint16_t ms)
 {
 	uint32_t Delay_Cycles;
 	
 	
-	for (Delay_Cycles = (ms * (F_CPU/10000)) ; Delay_Cycles > 0 ; Delay_Cycles--);
+	for (Delay_Cycles = (ms * (1000000/10000)) ; Delay_Cycles > 0 ; Delay_Cycles--);
 }
 
-void Set_Pin(uint8_t Port, uint8_t Pin)
+void Init(void)
+{
+	// Define Output Pins
+	DDRC = DDRC |(1<<DDC0); // PC0 is digital output
+	
+	//// Setup ADC on PC1
+	//PRR = PRR |(1<<PRADC); //Enable ADC in power reduction register
+	//ADMUX = ADMUX |(1<<REFS0)|(1<<MUX0)|(1<<ADLAR); // Ref = AVCC, Source = PC1, LSBs in separate register
+	//ADCSRA = ADCSRA |(1<<ADEN); // ADC Enable
+	//DIDR0 = DIDR0 |(1<<ADC1D); // Disable digital input on PC1
+	
+	//// Setup Comparator
+	//PRR = PRR |(1<<PRADC); //Enable ADC in power reduction register
+	
+	//Return_5();
+	
+	while(1)
+	{
+		PINC = (1<<PINC0); // Toggle PC0
+		//_delay_ms(1000);
+		Delay_Ms(1000);
+	}
+}
+
+
+
+uint8_t Check_Infrared(void)
+{
+	while(1)
+	{
+		PINC = (1<<PINC0); // Toggle PC0
+		Delay_Ms(1000);
+	}
+	
+	//ADCSRA = ADCSRA |(1<<ADSC); // Activate ADC
+	//while(ADSC == 1); // Wait until ADC is setup
+	//
+	//uint8_t Threshold = 132;
+	//if (ADCH > Threshold )
+	//{
+		//return 0;
+	//}
+	//
+	//else 
+	//{
+		//return 1;
+	//}
+
+}
+
+void Toggle_PC0 (void)
 {
 	
 }

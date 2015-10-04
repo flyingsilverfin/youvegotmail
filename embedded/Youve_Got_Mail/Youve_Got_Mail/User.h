@@ -13,15 +13,17 @@
 
 
 
-#endif /* USER_H_ */
 
 #include <avr/io.h>
 
 // # Defines
 
-#define F_CPU 1000000
+#define F_CPU 1000000UL
 
 // Function Prototypes
+extern void Delay_Ms(uint16_t ms);
+extern void Init(void);
 
-void Init(void);
-void Delay_Ms(uint16_t ms);
+extern uint8_t Check_Infrared(void);
+extern void Toggle_PC0 (void);
+#endif /* USER_H_ */
