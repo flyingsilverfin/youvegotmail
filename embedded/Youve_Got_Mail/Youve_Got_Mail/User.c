@@ -72,3 +72,30 @@ void Toggle_PC0 (void)
 {
 	
 }
+
+void SPI_MasterInit(void) {
+	//this is the default value anyway but might as well re-set it
+	//turns on the clock to the SPI module (else not powered on at all)
+	PRR |= 1 << PRSPI;	
+	
+	/* Set MOSI and SCK output, all others input */
+	//I assume these are going to be through PORTB
+	DDRB |= (1<<PB3)|(1<<PB6);
+	/* Enable SPI, Master, set clock rate fck/16 */
+	SPCR |= (1<<SPE)|(1<<MSTR)|(1<<SPR0);
+}
+
+void Setup_SPI_For_NRFTransceiver(void) {
+	/*
+	the NRF Transceiver operates in
+		CPHA = 0
+		CPOL = 0
+		DORD = 0 (MSb first)
+	
+	These are the default values for these bits anyway, good practice to set them anyway
+	*/
+
+	SPCR |= 0 << DORD;
+	SPCR |= 0 << CPOL;
+	SPCR |= 0 << CPHA;
+}

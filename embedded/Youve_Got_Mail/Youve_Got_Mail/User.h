@@ -9,11 +9,6 @@
 #ifndef USER_H_
 #define USER_H_
 
-
-
-
-
-
 #include <avr/io.h>
 
 // # Defines
