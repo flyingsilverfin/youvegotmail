@@ -21,4 +21,8 @@ extern void Init(void);
 
 extern uint8_t Check_Infrared(void);
 extern void Toggle_PC0 (void);
+
+//comm
+void SPI_MasterInit(void);
+void Set_SPI_modes(uint16_t isCPHA_1, uint16_t isCPOL_1, uint16_t isDORD_1);
 #endif /* USER_H_ */

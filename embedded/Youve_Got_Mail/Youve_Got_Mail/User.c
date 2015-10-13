@@ -85,17 +85,18 @@ void SPI_MasterInit(void) {
 	SPCR |= (1<<SPE)|(1<<MSTR)|(1<<SPR0);
 }
 
-void Setup_SPI_For_NRFTransceiver(void) {
-	/*
-	the NRF Transceiver operates in
-		CPHA = 0
-		CPOL = 0
-		DORD = 0 (MSb first)
-	
-	These are the default values for these bits anyway, good practice to set them anyway
-	*/
+/*
+the NRF Transceiver operates in
+CPHA = 0
+CPOL = 0
+DORD = 0 (MSb first)
 
-	SPCR |= 0 << DORD;
-	SPCR |= 0 << CPOL;
-	SPCR |= 0 << CPHA;
+These are the default values for these bits anyway, good practice to set them anyway
+*/
+
+void Set_SPI_modes(uint16_t isCPHA_1, uint16_t isCPOL_1, uint16_t isDORD_1) {
+	SPCR |= 0 << (1&isCPHA_1);	//have the 1& in case any higher bits are set (only want LSb set!)
+	SPCR |= 0 << (1&isCPOL_1);
+	SPCR |= 0 << (1&isDORD_1);
 }
+
