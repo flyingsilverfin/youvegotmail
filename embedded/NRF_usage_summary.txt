@@ -1,0 +1,89 @@
+to send data (TX mode)
+	PWR_UP set high
+	PRIM_RX set low
+	Payload in TX buffer
+	Pulse CE high (pull low to go to standby mode I)
+	NEVER KEEP IN TX MODE FOR MORE THAN 4 MS
+	
+
+Air data rate:
+	RF_DR and RF_SETUP registers (MUST ALL BE THE SAME)
+	We will be using 1 Mbps
+	
+	
+RF channel:
+	set by RF_CH
+	Frequency band: F0 = 2400 + RF_CH[Mhz]
+	so if it's set to 0, F0 = 2400
+	
+
+Address:
+	AW register sets 3,4,5 byte address
+	
+	
+	
+Pin connections:
+	IRQ: active low, I think this is an interrupt...
+	CE: active high (like chip select), actives chip in RX or TX mode
+	CSN, SCK, MOSI, MISO (SPI)
+	
+Programming and control:
+	All commands are 1 Byte
+	Each new command must be started by a high to low on CSN
+	The Chip automatically shifts out the 1 Byte STATUS register to the Master, while command is shifted in on MOSI, then the command data may be shifted to Master
+	Serial shift to slave: 
+		<COMMAND 1 byte, MSb to LSb>
+		<DATA n bytes, LSByte to MSByte, MSbit first each byte>
+		
+	Commands:
+	
+		read register:		R_REGISTER	 	000AAAAA 	1 to 5LSByte first - these values are returned on MISO after the status byte	AAAAA = 5 bit register location
+		write register: 	W_REGISTER		001AAAAA	1 to 5LSByte first - these values are written on MOSI after the command byte	AAAAA = 5 bit register location
+			NOTES: Only executable in Standby or power down modes!!!
+			
+		read from RX FIFO:	R_RX_PAYLOAD 	01100001 	1 to 32LSByte first - values are returned on MISO after the status byte
+		write to TX FIFO:	W_TX_PAYLOAD 	10100000	1 to 32LSByte first - values are shifted out on MOSI after command byte
+		
+		
+	Important Registers:
+		00	CONFIG byte
+			PWR_UP		Bit 1		1: Power UP, 0: Power down
+			PRIM_RX		Bit 0		1: PRX (RX), 0: PTX (TX)
+			
+		03	SETUP_AW byte - set address width
+			AW			Bits [1:0]	'01': 3 bytes, '10': 4 bytes, '11': 5 bytes (default)
+			
+		05	RF_CH byte - set radio channel
+			RF_CH		Bits[6:0]	'0000010' default, see above formula
+			
+		06	RF_SETUP - configure radio
+			RF_DR_LOW	Bit 5		see below for use, default 0
+			RF_DR_HIGH	Bit 3 		see below for use, default 1
+				[RF_DR_LOW, RF_DR_HIGH]: [00] – 1Mbps, [01]– 2Mbps (DEFAULT), [10] – 250kbps 
+			
+		07	STATUS - status of RX and TX FIFO's and stuff
+			{Not sure we have to touch this...}
+			{//TODO}
+		
+		0A 	RX_ADDR_P0 	39:0	0xE7E7E7E7E7
+			{Leave as default for now}
+		10	TX_ADDR		39:0 	0xE7E7E7E7E7
+			{Leave as default right now}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
